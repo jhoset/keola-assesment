@@ -1,1 +1,53 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&display=swap");
+
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/*
+* Global Styles
+*/
+
+body {
+  background-color: #F9FAFC;
+  font-family: "DM Sans", sans-serif;;
+}
+
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #EAEBF1;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #6A6A6F;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: #3A3A3E;
+  border-radius: 10px;
+}
+
+
+
+.custom-input {
+  @apply bg-[#FFFFFF] border border-gray-300 text-gray-900 text-sm rounded-lg
+  disabled:opacity-80 disabled:cursor-not-allowed
+  focus:ring-2 focus:ring-[#051B54]/20 block w-full p-2.5 outline-none mx-[0.5];
+}
+
+.is-invalid {
+  border-color: #EF4444;
+  &:focus {
+    box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.4);
+  }
+}
+
+

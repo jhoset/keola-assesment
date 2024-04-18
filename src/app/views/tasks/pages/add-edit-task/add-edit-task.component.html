@@ -1,0 +1,95 @@
+<div class="relative mt-2">
+  <div
+    class="animate-fadeIn bg-[#FFFFFF] h-[calc(100vh-200px)] overflow-y-auto  md:h-[calc(100vh-300px)] p-6 rounded-lg shadow-md">
+    <h1 class="text-3xl text-center font-medium text-[#051B54]">
+      Formulario de
+      {{ this._commonTaskService.getTaskDto() ? 'Edición' : 'Registro' }}
+    </h1>
+    <hr class="my-6">
+    <div class="grid md:grid-cols-2 md:px-12 gap-x-8 gap-y-6">
+      <div>
+        <label for="name" class="font-medium after:content-['*'] after:text-red-600"> Titulo </label>
+        <input [formControl]="_commonTaskService.titleControl"
+               placeholder="Example: Ser el mejor SE de LATAM"
+               [ngClass]="{ 'is-invalid': submitted && _commonTaskService.titleControl.errors }"
+               class="custom-input"
+               type="text" id="name">
+        <div *ngIf="submitted && _commonTaskService.titleControl.errors" class="text-red-600">
+          <div *ngIf="_commonTaskService.titleControl.errors['required']">Titulo es requerido.</div>
+        </div>
+      </div>
+      <div>
+        <label for="description" class="font-medium after:content-['*'] after:text-red-600">
+          Descripción: </label>
+        <textarea style="resize: none"
+                  placeholder="Descripcion..."
+                  [formControl]="_commonTaskService.descriptionControl"
+                  class="custom-input"
+                  [ngClass]="{ 'is-invalid': submitted && _commonTaskService.descriptionControl.errors }"
+                  type="text" id="description"></textarea>
+        <div *ngIf="submitted && _commonTaskService.descriptionControl.errors" class="text-red-600">
+          <div *ngIf="_commonTaskService.descriptionControl.errors['required']">Descripción es requerido.</div>
+        </div>
+      </div>
+      <div>
+        <label for="logo" class="font-medium after:content-['*'] after:text-red-600"> Fecha de vencimiento </label>
+        <input [formControl]="_commonTaskService.expirationDateControl"
+               placeholder="https://www.example.com/logo-visa.jpg"
+               class="custom-input"
+               [min]="minExpirationDate | date:'yyyy-MM-dd'"
+               [ngClass]="{ 'is-invalid': submitted && _commonTaskService.expirationDateControl.errors }"
+               type="date" id="logo">
+        <div *ngIf="submitted && _commonTaskService.expirationDateControl.errors" class="text-red-600">
+          <div *ngIf="_commonTaskService.expirationDateControl.errors['required']">Fecha de vencimiento es requerido.
+          </div>
+          <div *ngIf="_commonTaskService.expirationDateControl.errors['invalidDate']">
+            Fecha de vencimiento es invalida
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="priority" class="font-medium after:content-['*'] after:text-red-600"> Prioridad </label>
+        <select [formControl]="_commonTaskService.priorityControl"
+                class="custom-input"
+                [ngClass]="{ 'is-invalid': submitted && _commonTaskService.priorityControl.errors }"
+                name="records_per_page" id="priority">
+          <option [value]="null" selected>Seleccione una prioridad...</option>
+          <option [value]="'low'">Baja</option>
+          <option [value]="'medium'">Media</option>
+          <option [value]="'high'">Alta</option>
+        </select>
+        <div *ngIf="submitted && _commonTaskService.priorityControl.errors" class="text-red-600">
+          <div *ngIf="_commonTaskService.priorityControl.errors['required']">Prioridad es requerido.
+          </div>
+        </div>
+      </div>
+      <div>
+        <label for="logo" class="font-medium after:content-['*'] after:text-red-600"> Etiqueta(s) </label>
+        <ng-multiselect-dropdown
+          [data]="tagList"
+          [settings]="dropdownSettings"
+          [formControl]="_commonTaskService.tagsControl"
+          class="custom-input"
+          [ngClass]="{ 'is-invalid': submitted && _commonTaskService.expirationDateControl.errors }"
+          [placeholder]="'Seleccionar Etiquetas...'">
+        </ng-multiselect-dropdown>
+        <div *ngIf="submitted && _commonTaskService.tagsControl.errors" class="text-red-600">
+          <div *ngIf="_commonTaskService.tagsControl.errors['required']"> Etiqueta(s) es requerido.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="flex justify-center gap-8 my-8 md:my-16">
+      <custom-button (onClick)="onReturnToTaskListPage()" [disabled]="loading">
+        <span class="px-4">Volver</span>
+      </custom-button>
+      <custom-button [disabled]="loading" (onClick)="onSubmit()"
+                     [customClass]="' bg-[#F5DF66] hover:bg-[#ECCD23] focus:ring-[#ECCD23]/50'">
+        <div class="flex items-center gap-2 px-4">
+          <span> Guardar </span>
+        </div>
+      </custom-button>
+    </div>
+    <app-loading *ngIf="loading"></app-loading>
+  </div>
+</div>
